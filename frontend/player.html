@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+  <body>
+    <h1>Player</h1>
+
+    <video id="video" controls width="900"></video>
+
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+
+    <script>
+      const params = new URLSearchParams(window.location.search);
+
+      const id = params.get("id");
+
+      async function loadVideo() {
+        const response = await fetch(`http://localhost/api/videos/${id}`);
+
+        const videoData = await response.json();
+
+        const video = document.getElementById("video");
+
+        const hls = new Hls();
+
+        hls.loadSource(`http://localhost${videoData.playlist}`);
+
+        hls.attachMedia(video);
+      }
+
+      loadVideo();
+    </script>
+  </body>
+</html>
