@@ -30,8 +30,7 @@ exports.login = async (req, res) => {
       return res.sendStatus(401);
     }
 
-    // const valid = await bcrypt.compare(password, user.password);
-    const valid = password === user.password;
+    const valid = await bcrypt.compare(password, user.password);
 
     if (!valid) {
       return res.sendStatus(401);
@@ -46,7 +45,6 @@ exports.login = async (req, res) => {
 
     res.json({ token });
   } catch (err) {
-    console.log("A7A");
     res.status(500).json({ error: err.message });
   }
 };
